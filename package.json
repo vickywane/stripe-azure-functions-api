@@ -6,6 +6,9 @@
     "start": "func start",
     "test": "echo \"No tests yet...\""
   },
-  "dependencies": {},
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "stripe": "^8.165.0"
+  },
   "devDependencies": {}
 }
