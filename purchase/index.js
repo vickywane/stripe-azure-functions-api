@@ -31,11 +31,10 @@ module.exports = async function (context, req) {
         exp_month,
       },
     });
-
+  
     const { id: customerID } = await stripe.customers.create({
       email,
       description: "Artwork gallery customer",
-      payment_method: paymentID,
     });
 
     await stripe.paymentMethods.attach(paymentID, { customer: customerID });
@@ -56,7 +55,7 @@ module.exports = async function (context, req) {
         body: {
           message: "SUBSCRIPTION CREATED",
           userStripeId: customerID,
-          userSubscriptionId: subscriptionData.id,
+          paymentId: subscriptionData.id,
         },
       };
     } else {
@@ -78,10 +77,12 @@ module.exports = async function (context, req) {
         headers,
         body: {
           message: `PAYMENT OF ${amount_received} RECIEVED`,
+          paymentId : paymentIntentId
         },
       };
     }
   } catch (e) {
+    console.log(e)
     context.res = {
       status: 500,
       body: e,
